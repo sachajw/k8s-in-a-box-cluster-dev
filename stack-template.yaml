@@ -1,4 +1,4 @@
-name: pangarabbit-poc
+name: ww-poc
 kind: StackTemplate
 cliVersion: ">=0.6.1"
 units:
@@ -33,7 +33,7 @@ units:
     kubeconfig: "$KUBECONFIG"
     kubectl_opts: "--wait=true"
     depends-on:
-      - pangarabbit-poc.kind-cluster-dev
+      - ww-poc.kind-cluster-dev
     pre-hook:
       command: "echo pre-hook"
       # script: "./scripts/hook.sh"

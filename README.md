@@ -2,8 +2,43 @@
 - Docker
 - Kind
 - Helm
-- Cluster.Dev
+- Kustomize
+- Terraform
 - Backstage
+- IBM Message Queue
+
+### Standardise Terraform Modular Structure
+
+A Terraform module is simply a collection of `.tf` configuration files that define multiple related resources, coded in such a way that the code can be reused. The benefit of using modules is that coding effort will be greatly reduced when doing the same thing across multiple projects.
+
+### Best practices for terraform modular structure
+
+- `main.tf`, `variables.tf`, `outputs.tf`. These are the recommended filenames for a minimal module, even if they're empty. `main.tf` should be the primary entrypoint.
+- The root directory of the project can be referred to as the `root module`. Nested modules, aka `child modules`, should exist under the `modules/` subdirectory. The code in the root module usually calls the child modules as required.
+- These modules can be nested, although it is recommended not to go more than 3/4 levels deep and to avoid this if possible to reduce complexity.
+- The root module and any nested modules should have `README` files.
+
+A sample modular Terraform project structure looks like this:
+
+![https://miro.medium.com/max/427/1*L8H9LuUcrlIjLh1ZeXubvg.png](https://miro.medium.com/max/427/1*L8H9LuUcrlIjLh1ZeXubvg.png)
+
+Notice the multiple modules under `modules` directory. A recommended approach is to move this `modules` directory to a shared repository so all projects within your organization can call those centralized templatized reusable modules from their individual projects.
+
+Also notice the `.tfvars` files located under the environment related directories such as `dev` and `prod` under `.env`.
+
+These are the files holding environment specific values for the variables.
+
+To continue our discussion above on templatized Lambda module, we now can have the root `main.tf` call the Lambda reusable module to create two new Lambda functions `lambda_demo1` and `lambda_demo2`, see snippet from our root `main.tf` below:
+
+Notice we parameterized `role` here with a variable defined in root level's `variables.tf` file. We could parameterize the other variables as well, but for demo
+purpose, let's just show one for now. The actual value of `lambda_iam_role_arn` is defined in `terraform.tfvars` file located under `.env/dev` folder.
+
+```
+bash
+lambda_iam_role_arn = "arn:aws:iam::##########:role/service-role/lambda-test-role-#####"
+```
+
+A better approach would be to use Terraformer to import code for that IAM role, and modularize that `iam` module, then in root `main.tf`, create a new Lambda IAM role, then use the output of calling the `iam` module in the Lambda block, `role = module.iam.iam_role_arn`, instead of using hard-coded variable from `terraform.tfvars`. Well, readers are welcome to use this scenario as an exercise to practice on your own.
 
 ### [VSCode](https://code.visualstudio.com/) IDE
 - Download `VSCode IDE` [here](https://code.visualstudio.com/download)
@@ -149,4 +184,43 @@ helm install argocd ./helm-appsofapps --dry-run
 #### Dry-run with Debug
 ```
 helm install argocd ./helm-appsofapps --dry-run --debug
+```
+
+### [Terraform](https://www.terraform.io/intro)
+- Install Terraform [here](https://www.terraform.io/downloads)
+- Documentation is [here](https://www.terraform.io/docs)
+- [Terms & Conditions](https://registry.terraform.io/terms)
+#### Steps to get going
+- Clone `ww-mvp` [here](https://github.com/vicvah/ww-mvp)
+- Navigate to `ww-mvp/`
+- Run the following
+
+#### Deploy
+```
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+
+- You should see something like this in Docker Desktop
+![woolworths docker nodes!](images/docker/woolworths-nodes-docker.jpg "woolworths docker nodes")
+
+#### Tear down
+```
+terraform destroy
+```
+
+#### Logs
+In total, there 5 log levels which can be used for debugging purposes:
+
+- `TRACE` one of the most descriptive log levels, if you set the log level to *TRACE,* Terraform will write every action and step into the log file.
+- `DEBUG` a little bit more sophisticated logging which is used by developers at critical or more complex pieces of code to reduce debugging time.
+- `INFO` the info log level is useful when needing to log some informative instructions or readme type instructions.
+- `WARN` used when something is not critical but would be nice to include in the form of a log so that the developer can make adjustments later.
+- `ERROR` as the name suggests, this is used if something is terribly wrong and is a blocker.
+```
+export TF_LOG="DEBUG"
+```
+```
+export TF_LOG_PATH="/abraham/terraform-debug.log"
 ```

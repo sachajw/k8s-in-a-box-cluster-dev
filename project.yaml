@@ -2,5 +2,5 @@ name: poc
 kind: Project
 backend: default
 variables:
-  organization: "pangarabbit"
+  organization: "woolworths"
   domain: "cluster.dev"

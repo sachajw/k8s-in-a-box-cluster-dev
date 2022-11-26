@@ -2,9 +2,9 @@ name: dev-kind-cluster-template
 kind: StackTemplate
 units:
   -
-    name: kind-cluster
+    name: kind-cluster-dev
     type: "k8s-manifest"
-    namespace: kind-dev
+    namespace: ww-dev
     create_namespaces: true
     path: ./manifests
     apply_template: true
