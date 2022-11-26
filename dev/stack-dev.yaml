@@ -1,0 +1,24 @@
+name: dev-kind-cluster-template
+kind: StackTemplate
+units:
+  -
+    name: kind-cluster
+    type: "k8s-manifest"
+    namespace: kind-dev
+    create_namespaces: true
+    path: ./manifests
+    apply_template: true
+    kubeconfig: "$KUBECONFIG"
+    kubectl_opts: "--wait=true"
+    pre-hook:
+      command: "echo pre-hook"
+      # script: "./scripts/hook.sh"
+      on-apply: true
+      on-destroy: false
+      on-plan: false
+    post-hook:
+      # command: "echo post-hook"
+      script: "./scripts/hook.sh"
+      on-apply: true
+      on-destroy: false
+      on-plan: false

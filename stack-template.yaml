@@ -1,0 +1,64 @@
+name: pangarabbit-poc
+kind: StackTemplate
+cliVersion: ">=0.6.1"
+units:
+  -
+    name: kind-cluster-dev
+    type: "k8s-manifest"
+    namespace: ww-dev
+    create_namespaces: true
+    path: ./dev/
+    apply_template: true
+    kubeconfig: "$KUBECONFIG"
+    kubectl_opts: "--wait=true"
+    pre-hook:
+      command: "echo pre-hook"
+      # script: "./scripts/hook.sh"
+      on-apply: true
+      on-destroy: false
+      on-plan: false
+    post-hook:
+      # command: "echo post-hook"
+      script: "./scripts/hook.sh"
+      on-apply: true
+      on-destroy: false
+      on-plan: false
+  -
+    name: kind-cluster-uat
+    type: "k8s-manifest"
+    namespace: ww-uat
+    create_namespaces: true
+    path: ./uat/
+    apply_template: true
+    kubeconfig: "$KUBECONFIG"
+    kubectl_opts: "--wait=true"
+    depends-on:
+      - pangarabbit-poc.kind-cluster-dev
+    pre-hook:
+      command: "echo pre-hook"
+      # script: "./scripts/hook.sh"
+      on-apply: true
+      on-destroy: false
+      on-plan: false
+    post-hook:
+      # command: "echo post-hook"
+      script: "./scripts/hook.sh"
+      on-apply: true
+      on-destroy: false
+      on-plan: false
+  -
+    name: ingress-nginx
+    type: helm
+    source:
+      repository: "https://kubernetes.github.io/ingress-nginx"
+      chart: "ingress-nginx"
+      version: "4.4.0"
+    kubeconfig: "$KUBECONFIG"
+    additional_options:
+      namespace: "ingress-nginx"
+      create_namespace: true
+    inputs:
+        service.type: LoadBalancer
+        controller.admissionWebhooks.enabled: false
+        service.externalTrafficPolicy: Local
+        controller.ingressClassResource.default: true

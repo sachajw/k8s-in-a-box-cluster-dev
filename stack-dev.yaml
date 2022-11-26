@@ -1,0 +1,7 @@
+name: dev
+template: ./dev
+kind: Stack
+backend: default
+variables:
+  replicas: 1
+  domain: {{ ".project.variables.domain" }}

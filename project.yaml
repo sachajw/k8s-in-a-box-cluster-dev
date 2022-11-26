@@ -1,0 +1,6 @@
+name: poc
+kind: Project
+backend: default
+variables:
+  organization: "pangarabbit"
+  domain: "cluster.dev"
