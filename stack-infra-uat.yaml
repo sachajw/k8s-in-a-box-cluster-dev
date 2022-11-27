@@ -1,5 +1,5 @@
 name: uat
-template: ./uat
+template: "./uat"
 kind: Stack
 backend: default
 variables:
