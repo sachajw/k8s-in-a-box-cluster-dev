@@ -191,8 +191,8 @@ helm install argocd ./helm-appsofapps --dry-run --debug
 - Documentation is [here](https://www.terraform.io/docs)
 - [Terms & Conditions](https://registry.terraform.io/terms)
 #### Steps to get going
-- Clone `ww-mvp` [here](https://github.com/vicvah/ww-mvp)
-- Navigate to `ww-mvp/`
+- Clone `k8s-in-a-box-cluster-dev` [here](https://github.com/sachajw/k8s-in-a-box-cluster-dev)
+- Navigate to `k8s-in-a-box-cluster-dev/`
 - Run the following
 
 #### Deploy
@@ -201,9 +201,6 @@ terraform init
 terraform plan
 terraform apply -auto-approve
 ```
-
-- You should see something like this in Docker Desktop
-![woolworths docker nodes!](images/docker/woolworths-nodes-docker.jpg "woolworths docker nodes")
 
 #### Tear down
 ```
