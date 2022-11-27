@@ -91,11 +91,11 @@ docker pull quay.io/ortelius/ortelius:latest
 ```
 #### Copy
 ```
-docker cp ~/.docker/config.json woolworths-control-plane:/var/lib/kubelet/config.json
+docker cp ~/.docker/config.json ortelius-control-plane:/var/lib/kubelet/config.json
 ```
 #### Exec
 ```
-docker exec -it woolworths-worker bash
+docker exec -it ortelius-worker bash
 ```
 #### Delete images
 ```
@@ -124,19 +124,19 @@ docker image rm quay.io/ortelius/ortelius
 
 #### Get the list of nodes
 ```
-kind get nodes -n woolworths
+kind get nodes -n ortelius
 ```
 #### Cluster info
 ```
-kubectl cluster-info --context woolworths
+kubectl cluster-info --context ortelius
 ```
 #### Logs
 ```
-kind export logs -n woolworths
+kind export logs -n ortelius
 ```
 #### Load images onto the container nodes
 ```
-kind load docker-image --name woolworths --nodes woolworths-control-plane,woolworths-worker quay.io/ortelius/ortelius
+kind load docker-image --name ortelius --nodes ortelius-control-plane,ortelius-worker quay.io/ortelius/ortelius
 ```
 
 ### Helm
