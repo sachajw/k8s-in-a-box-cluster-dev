@@ -5,7 +5,6 @@
 - Kustomize
 - Terraform
 - Backstage
-- IBM Message Queue
 
 ### Standardise Terraform Modular Structure
 
