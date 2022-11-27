@@ -4,6 +4,7 @@
 - Helm
 - Kustomize
 - Terraform
+- Ortelius
 - Backstage
 
 ### Standardise Terraform Modular Structure
