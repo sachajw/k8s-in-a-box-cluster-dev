@@ -1,5 +1,5 @@
 name: |
-kind: "StackTemplate"
+kind: StackTemplate
 units:
   -
     name: "kind-cluster"

@@ -1,7 +1,7 @@
-name: "uat"
+name: uat
 template: "./uat"
 kind: Stack
-backend: "default"
+backend: default
 variables:
   replicas: 1
   domain: {{ ".project.variables.domain" }}

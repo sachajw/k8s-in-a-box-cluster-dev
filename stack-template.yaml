@@ -3,7 +3,7 @@ kind: StackTemplate
 cliVersion: ">=0.6.1"
 units:
   -
-    name: "dev"
+    name: dev
     type: "k8s-manifest"
     namespace: "ortelius-dev"
     create_namespaces: true

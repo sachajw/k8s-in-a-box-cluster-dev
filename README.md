@@ -4,8 +4,8 @@
 - Helm
 - Kustomize
 - Terraform
+- Ortelius
 - Backstage
-- IBM Message Queue
 
 ### Standardise Terraform Modular Structure
 
@@ -91,11 +91,11 @@ docker pull quay.io/ortelius/ortelius:latest
 ```
 #### Copy
 ```
-docker cp ~/.docker/config.json woolworths-control-plane:/var/lib/kubelet/config.json
+docker cp ~/.docker/config.json ortelius-control-plane:/var/lib/kubelet/config.json
 ```
 #### Exec
 ```
-docker exec -it woolworths-worker bash
+docker exec -it ortelius-worker bash
 ```
 #### Delete images
 ```
@@ -124,19 +124,19 @@ docker image rm quay.io/ortelius/ortelius
 
 #### Get the list of nodes
 ```
-kind get nodes -n woolworths
+kind get nodes -n ortelius
 ```
 #### Cluster info
 ```
-kubectl cluster-info --context woolworths
+kubectl cluster-info --context ortelius
 ```
 #### Logs
 ```
-kind export logs -n woolworths
+kind export logs -n ortelius
 ```
 #### Load images onto the container nodes
 ```
-kind load docker-image --name woolworths --nodes woolworths-control-plane,woolworths-worker quay.io/ortelius/ortelius
+kind load docker-image --name ortelius --nodes ortelius-control-plane,ortelius-worker quay.io/ortelius/ortelius
 ```
 
 ### Helm
@@ -191,8 +191,8 @@ helm install argocd ./helm-appsofapps --dry-run --debug
 - Documentation is [here](https://www.terraform.io/docs)
 - [Terms & Conditions](https://registry.terraform.io/terms)
 #### Steps to get going
-- Clone `ww-mvp` [here](https://github.com/vicvah/ww-mvp)
-- Navigate to `ww-mvp/`
+- Clone `k8s-in-a-box-cluster-dev` [here](https://github.com/sachajw/k8s-in-a-box-cluster-dev)
+- Navigate to `k8s-in-a-box-cluster-dev/`
 - Run the following
 
 #### Deploy
@@ -201,9 +201,6 @@ terraform init
 terraform plan
 terraform apply -auto-approve
 ```
-
-- You should see something like this in Docker Desktop
-![woolworths docker nodes!](images/docker/woolworths-nodes-docker.jpg "woolworths docker nodes")
 
 #### Tear down
 ```
