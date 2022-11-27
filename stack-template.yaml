@@ -1,13 +1,13 @@
-name: ww-poc
+name: |
 kind: StackTemplate
 cliVersion: ">=0.6.1"
 units:
   -
-    name: kind-cluster-dev
+    name: "dev"
     type: "k8s-manifest"
-    namespace: ww-dev
+    namespace: "ortelius-dev"
     create_namespaces: true
-    path: ./dev/
+    path: "./dev/"
     apply_template: true
     kubeconfig: "$KUBECONFIG"
     kubectl_opts: "--wait=true"
@@ -24,16 +24,16 @@ units:
       on-destroy: false
       on-plan: false
   -
-    name: kind-cluster-uat
+    name: "uat"
     type: "k8s-manifest"
-    namespace: ww-uat
+    namespace: "ortelius-uat"
     create_namespaces: true
-    path: ./uat/
+    path: "./uat/"
     apply_template: true
     kubeconfig: "$KUBECONFIG"
     kubectl_opts: "--wait=true"
     depends-on:
-      - ww-poc.kind-cluster-dev
+      - "ortelius-poc.kind-cluster-dev"
     pre-hook:
       command: "echo pre-hook"
       # script: "./scripts/hook.sh"
@@ -47,8 +47,8 @@ units:
       on-destroy: false
       on-plan: false
   -
-    name: ingress-nginx
-    type: helm
+    name: "ingress-nginx"
+    type: "helm"
     source:
       repository: "https://kubernetes.github.io/ingress-nginx"
       chart: "ingress-nginx"
@@ -58,7 +58,7 @@ units:
       namespace: "ingress-nginx"
       create_namespace: true
     inputs:
-        service.type: LoadBalancer
+        service.type: "LoadBalancer"
         controller.admissionWebhooks.enabled: false
-        service.externalTrafficPolicy: Local
+        service.externalTrafficPolicy: "Local"
         controller.ingressClassResource.default: true

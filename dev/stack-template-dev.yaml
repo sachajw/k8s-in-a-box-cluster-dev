@@ -1,12 +1,12 @@
-name: dev-kind-cluster-template
-kind: StackTemplate
+name: |
+kind: "StackTemplate"
 units:
   -
-    name: kind-cluster-dev
+    name: "kind-cluster"
     type: "k8s-manifest"
-    namespace: ww-dev
+    namespace: "ortelius-dev"
     create_namespaces: true
-    path: ./manifests
+    path: "./manifests"
     apply_template: true
     kubeconfig: "$KUBECONFIG"
     kubectl_opts: "--wait=true"
