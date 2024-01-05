@@ -1,7 +1,8 @@
 repo_name: sachajw/k8s-in-a-box-cluster-dev
 report_id: 60316d4ddd451ed1444f47cbf48529e9
+version: 0.1
 repo_type: Public
-timestamp: '2023-11-16T10:39:22+00:00'
+timestamp: '2024-01-05T08:38:43+00:00'
 requested_by: sachajw
 provider: github
 branch: main
@@ -15,4 +16,5 @@ tools:
   category: Build, Test, Deploy
   sub_category: Version Control System
   image_url: https://img.stackshare.io/service/1046/git.png
+  detection_source_url: https://github.com/sachajw/k8s-in-a-box-cluster-dev
   detection_source: Repo Metadata
